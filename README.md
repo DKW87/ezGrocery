@@ -1,2 +1,16 @@
 # ezGrocery
-An Android app for ez managing your grocery lists.
+An Android app for ez grocery list management.
+
+What is to come:
+- always works offline;
+- support for multiple lists;
+- recurring lists;
+- sectioned lists for when you visit multiple stores;
+- allow for persistent item order and rearrangement;
+- ghost items (items you don't want returned in your list next time);
+- jump to last opened list when opening the app;
+- synchronize your lists to your Google Drive;
+- smooth, clean, minimal GUI with relatively large item cards;
+- large cards will allow for ez completion when at the grocery store!
+
+And more!
