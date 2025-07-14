@@ -13,4 +13,4 @@ What is to come:
 - smooth, clean, minimal GUI with relatively large item cards;
 - large cards will allow for ez completion when at the grocery store!
 
-And more!
+And more to come!
