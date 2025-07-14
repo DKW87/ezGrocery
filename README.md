@@ -2,7 +2,7 @@
 An Android app for ez grocery list management.
 
 What is to come:
-- always works offline;
+- always works offline (already true!);
 - support for multiple lists;
 - recurring lists;
 - sectioned lists for when you visit multiple stores;
