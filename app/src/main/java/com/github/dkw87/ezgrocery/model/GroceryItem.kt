@@ -4,10 +4,8 @@ import java.time.LocalDateTime
 
 data class GroceryItem(
     val id: Long,
-    val createdOn: LocalDateTime,
     var title: String,
+    var quantity: Int,
     var position: Int,
-    var lastModified: LocalDateTime,
-    var isPriority: Boolean,
-    var isGhostItem: Boolean
+    var completed: Boolean,
 )
