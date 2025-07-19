@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-class LocalDataStorage(private val context: Context) {
+class GroceryItemDataStorage(private val context: Context) {
     private val preferences = context.getSharedPreferences("ezGrocery_preferences", Context.MODE_PRIVATE)
     private val objectMapper = ObjectMapper().apply {
         registerModule(KotlinModule.Builder().build())
