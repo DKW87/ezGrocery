@@ -6,15 +6,17 @@ import java.util.UUID
 
 class AddItemUseCase(private val repository: GroceryItemRepository) {
     fun execute(name: String, quantity: Int, position: Int) {
-        if (name.isNotBlank()) {
-            val item = GroceryItem(
-                id = UUID.randomUUID().toString(),
-                name = name.trim(),
-                quantity = quantity,
-                position = position,
-                isCompleted = false
-            )
-            repository.addItem(item)
+        if (name != null) {
+            if (name.isNotBlank()) {
+                val item = GroceryItem(
+                    id = UUID.randomUUID().toString(),
+                    name = name.trim(),
+                    quantity = quantity,
+                    position = position,
+                    isCompleted = false
+                )
+                repository.addItem(item)
+            }
         }
     }
 }
