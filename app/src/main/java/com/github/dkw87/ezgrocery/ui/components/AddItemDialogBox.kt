@@ -34,9 +34,9 @@ fun AddItemDialogBox(
                 Spacer(modifier = Modifier.height(8.dp))
 
                 OutlinedTextField(
-                    value = viewModel.itemQuantity,
-                    onValueChange = viewModel::updateItemQuantity,
-                    label = { Text("Item quanity") },
+                    value = viewModel.itemQuantity.toString(),
+                    onValueChange = { viewModel.updateItemQuantity(it.toIntOrNull() ?: 1) },
+                    label = { Text("Item quantity") },
                     modifier = Modifier.fillMaxWidth()
                 )
 
