@@ -23,4 +23,11 @@ class AddItemViewModel(private val addItemUseCase: AddItemUseCase) : ViewModel()
         itemQuantity = quantity
     }
 
+    fun addItem() {
+        addItemUseCase.execute(itemName, itemQuantity)
+        // reset form
+        itemName = ""
+        itemQuantity = 1
+    }
+
 }
