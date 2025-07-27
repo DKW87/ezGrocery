@@ -1,14 +1,14 @@
 package com.github.dkw87.ezgrocery.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.github.dkw87.ezgrocery.data.repository.GroceryItemRepository
+import com.github.dkw87.ezgrocery.domain.usecase.RemoveItemUseCase
 
 class RemoveItemViewModel(
-    private val itemRepository: GroceryItemRepository
+    private val removeItemUseCase: RemoveItemUseCase
 ) : ViewModel() {
 
     fun removeItem(id: String) {
-        itemRepository.removeItem(id)
+        removeItemUseCase.execute(id)
     }
 
 }
