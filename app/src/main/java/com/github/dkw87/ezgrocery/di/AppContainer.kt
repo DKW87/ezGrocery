@@ -4,9 +4,11 @@ import android.content.Context
 import com.github.dkw87.ezgrocery.data.localstorage.GroceryItemDataStorage
 import com.github.dkw87.ezgrocery.data.repository.GroceryItemRepository
 import com.github.dkw87.ezgrocery.domain.usecase.AddItemUseCase
+import com.github.dkw87.ezgrocery.domain.usecase.RemoveItemUseCase
 import com.github.dkw87.ezgrocery.domain.usecase.ToggleItemUseCase
 import com.github.dkw87.ezgrocery.viewmodel.AddItemViewModel
 import com.github.dkw87.ezgrocery.viewmodel.ListViewModel
+import com.github.dkw87.ezgrocery.viewmodel.RemoveItemViewModel
 
 class AppContainer(context: Context) {
 
@@ -19,6 +21,7 @@ class AppContainer(context: Context) {
     // use cases
     private val addItemUseCase = AddItemUseCase(itemRepository)
     private val toggleItemUseCase = ToggleItemUseCase(itemRepository)
+    private val removeItemUseCase = RemoveItemUseCase(itemRepository)
 
     // ViewModels
     fun provideAddItemViewModel(): AddItemViewModel {
@@ -27,6 +30,10 @@ class AppContainer(context: Context) {
 
     fun provideListViewModel(): ListViewModel {
         return ListViewModel(itemRepository, toggleItemUseCase)
+    }
+
+    fun provideRemoveItemViewModel(): RemoveItemViewModel {
+        return RemoveItemViewModel(removeItemUseCase)
     }
 
 }
