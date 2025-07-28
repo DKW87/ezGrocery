@@ -15,7 +15,4 @@ class ListViewModel(
         toggleItemUseCase.execute(item)
     }
 
-    fun removeItem(id: String) {
-        repository.removeItem(id)
-    }
 }
