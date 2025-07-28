@@ -24,10 +24,12 @@ class MainActivity : ComponentActivity() {
             EzGroceryTheme {
                 val listViewModel = remember { appContainer.provideListViewModel() }
                 val addItemViewModel = remember { appContainer.provideAddItemViewModel() }
+                val removeItemViewModel = remember { appContainer.provideRemoveItemViewModel() }
 
                 ListScreen(
                     listViewModel = listViewModel,
-                    addItemViewModel = addItemViewModel
+                    addItemViewModel = addItemViewModel,
+                    removeItemViewModel = removeItemViewModel
                 )
             }
         }

@@ -31,17 +31,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.github.dkw87.ezgrocery.ui.components.AddItemDialogBox
 import com.github.dkw87.ezgrocery.ui.components.GroceryItemCard
+import com.github.dkw87.ezgrocery.ui.components.RemoveItemDialogBox
 import com.github.dkw87.ezgrocery.viewmodel.AddItemViewModel
 import com.github.dkw87.ezgrocery.viewmodel.ListViewModel
+import com.github.dkw87.ezgrocery.viewmodel.RemoveItemViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ListScreen(
     listViewModel: ListViewModel,
-    addItemViewModel: AddItemViewModel
+    addItemViewModel: AddItemViewModel,
+    removeItemViewModel: RemoveItemViewModel
 ) {
     val items by listViewModel.items.collectAsState()
     var showAddDialogBox by remember { mutableStateOf(false) }
+    var showRemoveDialogBox by remember { mutableStateOf(false) }
+    var itemToRemove by remember { mutableStateOf<String?>(null) }
 
     Scaffold(
         topBar = {
@@ -100,7 +105,10 @@ fun ListScreen(
                     GroceryItemCard(
                         item = item,
                         onToggle = listViewModel::toggleItem,
-                        onRemove = listViewModel::removeItem
+                        onRequestRemove = { itemID ->
+                            itemToRemove = itemID
+                            showRemoveDialogBox = true
+                        }
                     )
                 }
             }
@@ -111,6 +119,17 @@ fun ListScreen(
         AddItemDialogBox(
             viewModel = addItemViewModel,
             onDismiss = { showAddDialogBox = false }
+        )
+    }
+
+    if (showRemoveDialogBox && itemToRemove != null) {
+        RemoveItemDialogBox(
+            itemID = itemToRemove!!,
+            removeItemViewModel = removeItemViewModel,
+            onDismiss = {
+                showRemoveDialogBox = false
+                itemToRemove = null
+            }
         )
     }
 }

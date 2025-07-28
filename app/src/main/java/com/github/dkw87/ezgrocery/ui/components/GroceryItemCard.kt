@@ -25,7 +25,7 @@ import com.github.dkw87.ezgrocery.domain.model.GroceryItem
 fun GroceryItemCard(
     item: GroceryItem,
     onToggle: (GroceryItem) -> Unit,
-    onRemove: (String) -> Unit,
+    onRequestRemove: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -59,7 +59,7 @@ fun GroceryItemCard(
                 )
             }
 
-            IconButton(onClick = { onRemove(item.id) }) {
+            IconButton(onClick = { onRequestRemove(item.id) }) {
                 Icon(Icons.Default.Delete, contentDescription = "Remove this item")
             }
         }
