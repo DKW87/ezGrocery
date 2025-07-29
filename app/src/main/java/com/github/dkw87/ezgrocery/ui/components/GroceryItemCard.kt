@@ -1,5 +1,7 @@
 package com.github.dkw87.ezgrocery.ui.components
 
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -9,6 +11,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardColors
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -21,6 +25,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import com.github.dkw87.ezgrocery.domain.model.GroceryItem
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun GroceryItemCard(
     item: GroceryItem,
@@ -29,9 +34,19 @@ fun GroceryItemCard(
     modifier: Modifier = Modifier
 ) {
     Card(
+        colors = CardColors(
+            containerColor = CardDefaults.cardColors().containerColor,
+            contentColor = CardDefaults.cardColors().contentColor,
+            disabledContainerColor = CardDefaults.cardColors().disabledContainerColor,
+            disabledContentColor = CardDefaults.cardColors().disabledContentColor
+        ),
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 4.dp)
+            .combinedClickable(
+                onClick = { onToggle(item) },
+                onLongClick = { onRequestRemove(item.id) }
+            )
     ) {
         Row(
             modifier = Modifier
