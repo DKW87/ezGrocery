@@ -10,7 +10,8 @@ import com.github.dkw87.ezgrocery.viewmodel.RemoveItemViewModel
 fun RemoveItemDialogBox(
     itemID: String,
     removeItemViewModel: RemoveItemViewModel,
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
+    onSuccess: () -> Unit
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -20,6 +21,7 @@ fun RemoveItemDialogBox(
           TextButton(onClick = {
               removeItemViewModel.removeItem(itemID)
               onDismiss()
+              onSuccess()
           }) {
               Text("Remove")
           }

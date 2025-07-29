@@ -16,7 +16,8 @@ import com.github.dkw87.ezgrocery.viewmodel.AddItemViewModel
 @Composable
 fun AddItemDialogBox(
     viewModel: AddItemViewModel,
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
+    onSuccess: () -> Unit
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -45,6 +46,7 @@ fun AddItemDialogBox(
             TextButton(onClick = {
                 viewModel.addItem()
                 onDismiss()
+                onSuccess()
             },
                 enabled = viewModel.itemName.isNotBlank()) {
                 Text("Add")
