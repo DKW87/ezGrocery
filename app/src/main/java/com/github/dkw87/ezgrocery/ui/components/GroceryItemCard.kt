@@ -34,12 +34,7 @@ fun GroceryItemCard(
     modifier: Modifier = Modifier
 ) {
     Card(
-        colors = CardColors(
-            containerColor = CardDefaults.cardColors().containerColor,
-            contentColor = CardDefaults.cardColors().contentColor,
-            disabledContainerColor = CardDefaults.cardColors().disabledContainerColor,
-            disabledContentColor = CardDefaults.cardColors().disabledContentColor
-        ),
+        colors = setCardColors(item),
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 4.dp)
@@ -78,5 +73,17 @@ fun GroceryItemCard(
                 Icon(Icons.Default.Delete, contentDescription = "Remove this item")
             }
         }
+    }
+}
+
+@Composable
+fun setCardColors(item: GroceryItem): CardColors {
+    return if (item.isCompleted) {
+        CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
+            contentColor = MaterialTheme.colorScheme.primary
+        )
+    } else {
+        CardDefaults.cardColors()
     }
 }
