@@ -32,6 +32,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.github.dkw87.ezgrocery.ui.components.AddItemDialogBox
 import com.github.dkw87.ezgrocery.ui.components.GroceryItemCard
@@ -64,7 +65,7 @@ fun ListScreen(
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = {showAddDialogBox = true}
+                onClick = { showAddDialogBox = true }
             ) {
                 Icon(Icons.Default.Add, contentDescription = "Add item")
             }
@@ -110,7 +111,39 @@ fun ListScreen(
                     .padding(paddingValues),
                 verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
-                items(items) { item ->
+                val activeItems = items.filter { !it.isCompleted }
+                val completedItems = items.filter { it.isCompleted }
+
+                item {
+                    if (!activeItems.isEmpty()) {
+                        Text(
+                            text = "Active",
+                            modifier = Modifier.padding(horizontal = 20.dp)
+                        )
+                    }
+                }
+
+                items(activeItems) { item ->
+                    GroceryItemCard(
+                        item = item,
+                        onToggle = listViewModel::toggleItem,
+                        onRequestRemove = { itemID ->
+                            itemToRemove = itemID
+                            showRemoveDialogBox = true
+                        }
+                    )
+                }
+
+                item {
+                    if (!completedItems.isEmpty()) {
+                        Text(
+                            text = "Completed",
+                            modifier = Modifier.padding(horizontal = 20.dp)
+                        )
+                    }
+                }
+
+                items(completedItems) { item ->
                     GroceryItemCard(
                         item = item,
                         onToggle = listViewModel::toggleItem,
