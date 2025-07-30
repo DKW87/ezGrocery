@@ -10,10 +10,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxColors
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -49,26 +52,19 @@ fun GroceryItemCard(
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Checkbox(
-                checked = item.isCompleted,
-                onCheckedChange = { onToggle(item) }
-            )
-
-            Spacer(modifier = Modifier.width(8.dp))
-
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = item.name,
-                    style = MaterialTheme.typography.bodyLarge,
-                    textDecoration = if (item.isCompleted) TextDecoration.LineThrough else null
+                    style = MaterialTheme.typography.bodyLarge
                 )
                 Text(
                     text = "Quantity: ${item.quantity}",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    style = MaterialTheme.typography.bodySmall
                 )
             }
-
+            IconButton(onClick = {}) {
+                Icon(Icons.Default.Edit, contentDescription = "Edit this item")
+            }
             IconButton(onClick = { onRequestRemove(item.id) }) {
                 Icon(Icons.Default.Delete, contentDescription = "Remove this item")
             }
@@ -78,12 +74,12 @@ fun GroceryItemCard(
 
 @Composable
 fun setCardColors(item: GroceryItem): CardColors {
-    return if (item.isCompleted) {
-        CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer,
-            contentColor = MaterialTheme.colorScheme.primary
-        )
-    } else {
+    return if (!item.isCompleted) {
         CardDefaults.cardColors()
+    } else {
+        CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceContainer,
+            contentColor = MaterialTheme.colorScheme.outline
+        )
     }
 }
