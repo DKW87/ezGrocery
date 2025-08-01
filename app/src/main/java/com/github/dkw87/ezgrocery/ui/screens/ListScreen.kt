@@ -174,7 +174,17 @@ fun ListScreen(
                         onRequestRemove = { itemID ->
                             itemToRemove = itemID
                             showRemoveDialogBox = true
-                        }
+                        },
+                        modifier = Modifier.combinedClickable(
+                            onClick = {
+                                if (!isEditListScreen) {
+                                    listViewModel.toggleItem(item)
+                                }
+                            },
+                            onLongClick = {
+                                isEditListScreen = true
+                            }
+                        )
                     )
                 }
             }
