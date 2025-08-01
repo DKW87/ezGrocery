@@ -1,7 +1,5 @@
 package com.github.dkw87.ezgrocery.ui.components
 
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -22,10 +20,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.github.dkw87.ezgrocery.domain.model.GroceryItem
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun GroceryItemCard(
     item: GroceryItem,
+    isEditable: (Boolean),
     onToggle: (GroceryItem) -> Unit,
     onRequestRemove: (String) -> Unit,
     modifier: Modifier = Modifier
@@ -35,10 +33,6 @@ fun GroceryItemCard(
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 4.dp)
-            .combinedClickable(
-                onClick = { onToggle(item) },
-                onLongClick = { onRequestRemove(item.id) }
-            )
     ) {
         Row(
             modifier = Modifier
@@ -56,11 +50,13 @@ fun GroceryItemCard(
                     style = MaterialTheme.typography.bodySmall
                 )
             }
-            IconButton(onClick = {}) {
-                Icon(Icons.Default.Edit, contentDescription = "Edit this item")
-            }
-            IconButton(onClick = { onRequestRemove(item.id) }) {
-                Icon(Icons.Default.Delete, contentDescription = "Remove this item")
+            if (isEditable) {
+                IconButton(onClick = {}) {
+                    Icon(Icons.Default.Edit, contentDescription = "Edit this item")
+                }
+                IconButton(onClick = { onRequestRemove(item.id) }) {
+                    Icon(Icons.Default.Delete, contentDescription = "Remove this item")
+                }
             }
         }
     }

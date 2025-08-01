@@ -1,5 +1,7 @@
 package com.github.dkw87.ezgrocery.ui.screens
 
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,7 +14,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -43,7 +45,7 @@ import com.github.dkw87.ezgrocery.viewmodel.ListViewModel
 import com.github.dkw87.ezgrocery.viewmodel.RemoveItemViewModel
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun ListScreen(
     listViewModel: ListViewModel,
@@ -57,6 +59,7 @@ fun ListScreen(
     var showAddDialogBox by remember { mutableStateOf(false) }
     var showRemoveDialogBox by remember { mutableStateOf(false) }
     var itemToRemove by remember { mutableStateOf<String?>(null) }
+    var isEditListScreen by remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
@@ -65,10 +68,18 @@ fun ListScreen(
             )
         },
         floatingActionButton = {
-            FloatingActionButton(
-                onClick = { showAddDialogBox = true }
-            ) {
-                Icon(Icons.Default.Add, contentDescription = "Add item")
+            if (isEditListScreen) {
+                FloatingActionButton(
+                    onClick = { isEditListScreen = false }
+                ) {
+                    Icon(Icons.Default.Check, contentDescription = "Finish editing")
+                }
+            } else {
+                FloatingActionButton(
+                    onClick = { showAddDialogBox = true }
+                ) {
+                    Icon(Icons.Default.Add, contentDescription = "Add item")
+                }
             }
         },
         snackbarHost = { SnackbarHost(snackbarHostState) }
@@ -116,7 +127,7 @@ fun ListScreen(
                 val completedItems = items.filter { it.isCompleted }
 
                 item {
-                    if (!activeItems.isEmpty()) {
+                    if (activeItems.isNotEmpty()) {
                         Text(
                             text = "Active",
                             modifier = Modifier.padding(horizontal = 20.dp)
@@ -127,16 +138,27 @@ fun ListScreen(
                 items(activeItems) { item ->
                     GroceryItemCard(
                         item = item,
+                        isEditable = isEditListScreen,
                         onToggle = listViewModel::toggleItem,
                         onRequestRemove = { itemID ->
                             itemToRemove = itemID
                             showRemoveDialogBox = true
-                        }
+                        },
+                        modifier = Modifier.combinedClickable(
+                            onClick = {
+                                if (!isEditListScreen) {
+                                    listViewModel.toggleItem(item)
+                                }
+                            },
+                            onLongClick = {
+                                isEditListScreen = true
+                            }
+                        )
                     )
                 }
 
                 item {
-                    if (!completedItems.isEmpty()) {
+                    if (completedItems.isNotEmpty()) {
                         Text(
                             text = "Completed",
                             modifier = Modifier.padding(horizontal = 20.dp)
@@ -147,6 +169,7 @@ fun ListScreen(
                 items(completedItems) { item ->
                     GroceryItemCard(
                         item = item,
+                        isEditable = isEditListScreen,
                         onToggle = listViewModel::toggleItem,
                         onRequestRemove = { itemID ->
                             itemToRemove = itemID
