@@ -70,7 +70,8 @@ fun ListScreen(
         floatingActionButton = {
             if (isEditListScreen) {
                 FloatingActionButton(
-                    onClick = { isEditListScreen = false }
+                    onClick = { isEditListScreen = false },
+                    containerColor = MaterialTheme.colorScheme.secondaryContainer
                 ) {
                     Icon(Icons.Default.Check, contentDescription = "Finish editing")
                 }
