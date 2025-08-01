@@ -43,11 +43,11 @@ fun GroceryItemCard(
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = item.name,
-                    style = MaterialTheme.typography.bodyLarge
+                    style = MaterialTheme.typography.headlineSmall
                 )
                 Text(
                     text = "Quantity: ${item.quantity}",
-                    style = MaterialTheme.typography.bodySmall
+                    style = MaterialTheme.typography.bodyLarge
                 )
             }
             if (isEditable) {
