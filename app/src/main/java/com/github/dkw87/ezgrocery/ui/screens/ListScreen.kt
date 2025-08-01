@@ -34,6 +34,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.github.dkw87.ezgrocery.R
@@ -55,6 +57,7 @@ fun ListScreen(
     val items by listViewModel.items.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
+    val hapticFeedback = LocalHapticFeedback.current
 
     var showAddDialogBox by remember { mutableStateOf(false) }
     var showRemoveDialogBox by remember { mutableStateOf(false) }
@@ -153,6 +156,7 @@ fun ListScreen(
                             },
                             onLongClick = {
                                 isEditListScreen = true
+                                hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)
                             }
                         )
                     )
@@ -184,6 +188,7 @@ fun ListScreen(
                             },
                             onLongClick = {
                                 isEditListScreen = true
+                                hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)
                             }
                         )
                     )
