@@ -127,71 +127,94 @@ fun ListScreen(
                     .padding(paddingValues),
                 verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
-                val activeItems = items.filter { !it.isCompleted }
-                val completedItems = items.filter { it.isCompleted }
+                if (isEditListScreen) {
 
-                item {
-                    if (activeItems.isNotEmpty()) {
+                    item {
                         Text(
-                            text = "Active",
+                            text = "Adjust, edit or remove",
                             modifier = Modifier.padding(horizontal = 20.dp)
                         )
                     }
-                }
 
-                items(activeItems) { item ->
-                    GroceryItemCard(
-                        item = item,
-                        isEditable = isEditListScreen,
-                        onToggle = listViewModel::toggleItem,
-                        onRequestRemove = { itemID ->
-                            itemToRemove = itemID
-                            showRemoveDialogBox = true
-                        },
-                        modifier = Modifier.combinedClickable(
-                            onClick = {
-                                if (!isEditListScreen) {
-                                    listViewModel.toggleItem(item)
-                                }
-                            },
-                            onLongClick = {
-                                isEditListScreen = true
-                                hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)
+                    items(items) { item ->
+                        GroceryItemCard(
+                            item = item,
+                            isEditable = isEditListScreen,
+                            onToggle = listViewModel::toggleItem,
+                            onRequestRemove = { itemID ->
+                                itemToRemove = itemID
+                                showRemoveDialogBox = true
                             }
-                        )
-                    )
-                }
-
-                item {
-                    if (completedItems.isNotEmpty()) {
-                        Text(
-                            text = "Completed",
-                            modifier = Modifier.padding(horizontal = 20.dp)
                         )
                     }
-                }
 
-                items(completedItems) { item ->
-                    GroceryItemCard(
-                        item = item,
-                        isEditable = isEditListScreen,
-                        onToggle = listViewModel::toggleItem,
-                        onRequestRemove = { itemID ->
-                            itemToRemove = itemID
-                            showRemoveDialogBox = true
-                        },
-                        modifier = Modifier.combinedClickable(
-                            onClick = {
-                                if (!isEditListScreen) {
-                                    listViewModel.toggleItem(item)
-                                }
+                } else {
+                    val activeItems = items.filter { !it.isCompleted }
+                    val completedItems = items.filter { it.isCompleted }
+
+                    item {
+                        if (activeItems.isNotEmpty()) {
+                            Text(
+                                text = "Active",
+                                modifier = Modifier.padding(horizontal = 20.dp)
+                            )
+                        }
+                    }
+
+                    items(activeItems) { item ->
+                        GroceryItemCard(
+                            item = item,
+                            isEditable = isEditListScreen,
+                            onToggle = listViewModel::toggleItem,
+                            onRequestRemove = { itemID ->
+                                itemToRemove = itemID
+                                showRemoveDialogBox = true
                             },
-                            onLongClick = {
-                                isEditListScreen = true
-                                hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)
-                            }
+                            modifier = Modifier.combinedClickable(
+                                onClick = {
+                                    if (!isEditListScreen) {
+                                        listViewModel.toggleItem(item)
+                                    }
+                                },
+                                onLongClick = {
+                                    isEditListScreen = true
+                                    hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)
+                                }
+                            )
                         )
-                    )
+                    }
+
+                    item {
+                        if (completedItems.isNotEmpty()) {
+                            Text(
+                                text = "Completed",
+                                modifier = Modifier.padding(horizontal = 20.dp)
+                            )
+                        }
+                    }
+
+                    items(completedItems) { item ->
+                        GroceryItemCard(
+                            item = item,
+                            isEditable = isEditListScreen,
+                            onToggle = listViewModel::toggleItem,
+                            onRequestRemove = { itemID ->
+                                itemToRemove = itemID
+                                showRemoveDialogBox = true
+                            },
+                            modifier = Modifier.combinedClickable(
+                                onClick = {
+                                    if (!isEditListScreen) {
+                                        listViewModel.toggleItem(item)
+                                    }
+                                },
+                                onLongClick = {
+                                    isEditListScreen = true
+                                    hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)
+                                }
+                            )
+                        )
+                    }
                 }
             }
         }
