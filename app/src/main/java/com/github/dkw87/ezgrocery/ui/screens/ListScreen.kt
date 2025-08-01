@@ -32,8 +32,9 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.github.dkw87.ezgrocery.R
 import com.github.dkw87.ezgrocery.ui.components.AddItemDialogBox
 import com.github.dkw87.ezgrocery.ui.components.GroceryItemCard
 import com.github.dkw87.ezgrocery.ui.components.RemoveItemDialogBox
@@ -83,10 +84,10 @@ fun ListScreen(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Icon(
-                        Icons.Default.ShoppingCart,
-                        contentDescription = null,
-                        modifier = Modifier.size(64.dp),
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant
+                        painter = painterResource(id = R.drawable.ezlogo),
+                        contentDescription = "ezGrocery logo",
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.size(256.dp)
                     )
 
                     Spacer(modifier = Modifier.height(16.dp))
