@@ -56,6 +56,8 @@ dependencies {
     implementation(libs.androidx.viewmodel.compose)
     implementation(libs.androidx.material.icons.extended)
 
+    implementation(libs.reorderable)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

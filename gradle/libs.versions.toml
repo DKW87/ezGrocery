@@ -12,6 +12,7 @@ composeBom = "2024.09.00"
 jackson = "2.19.2"
 viewmodelCompose = "2.9.2"
 materialIcons = "1.7.8"
+reorderable = "2.5.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -36,6 +37,7 @@ jackson-kotlin = { group = "com.fasterxml.jackson.module", name = "jackson-modul
 androidx-viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "viewmodelCompose" }
 androidx-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended", version.ref = "materialIcons" }
 
+reorderable = { module = "sh.calvin.reorderable:reorderable", version = "2.5.1" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
