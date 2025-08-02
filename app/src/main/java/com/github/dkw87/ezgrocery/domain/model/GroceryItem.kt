@@ -4,6 +4,5 @@ data class GroceryItem(
     val id: String,
     var name: String,
     var quantity: Int,
-    var position: Int,
     var isCompleted: Boolean = false,
 )

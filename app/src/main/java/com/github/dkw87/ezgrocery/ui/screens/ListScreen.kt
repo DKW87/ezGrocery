@@ -1,5 +1,6 @@
 package com.github.dkw87.ezgrocery.ui.screens
 
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
@@ -37,6 +39,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.painterResource
@@ -49,6 +52,8 @@ import com.github.dkw87.ezgrocery.viewmodel.AddItemViewModel
 import com.github.dkw87.ezgrocery.viewmodel.ListViewModel
 import com.github.dkw87.ezgrocery.viewmodel.RemoveItemViewModel
 import kotlinx.coroutines.launch
+import sh.calvin.reorderable.ReorderableItem
+import sh.calvin.reorderable.rememberReorderableLazyListState
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
@@ -68,6 +73,22 @@ fun ListScreen(
     var isEditListScreen by remember { mutableStateOf(false) }
     var areActiveItemsHidden by remember { mutableStateOf(false) }
     var areCompletedItemsHidden by remember { mutableStateOf(false) }
+
+    val lazyListState = rememberLazyListState()
+    val reorderableLazyListState = rememberReorderableLazyListState(lazyListState) { from, to ->
+        if (isEditListScreen) {
+            // the text header (the 1 item) counts as 1 apparently,
+            // so need to -1 to prevent out of bounds
+            val actualToIndex = to.index -1
+            val actualFromIndex = from.index -1
+
+            val reorderedItems = items.toMutableList().apply {
+                add(actualToIndex, removeAt(actualFromIndex))
+            }
+
+            listViewModel.reorderItems(reorderedItems)
+        }
+    }
 
     Scaffold(
         topBar = {
@@ -130,7 +151,8 @@ fun ListScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(paddingValues),
-                verticalArrangement = Arrangement.spacedBy(4.dp)
+                verticalArrangement = Arrangement.spacedBy(4.dp),
+                state = lazyListState
             ) {
                 if (isEditListScreen) {
 
@@ -141,16 +163,29 @@ fun ListScreen(
                         )
                     }
 
-                    items(items) { item ->
-                        GroceryItemCard(
-                            item = item,
-                            isEditable = isEditListScreen,
-                            onToggle = listViewModel::toggleItem,
-                            onRequestRemove = { itemID ->
-                                itemToRemove = itemID
-                                showRemoveDialogBox = true
-                            }
-                        )
+                    items(items, key = { it.id }) { item ->
+                        ReorderableItem(reorderableLazyListState, key = item.id) { isDragging ->
+                            val elevation by animateDpAsState(if (isDragging) 4.dp else 0.dp)
+
+                            GroceryItemCard(
+                                item = item,
+                                isEditable = isEditListScreen,
+                                onToggle = listViewModel::toggleItem,
+                                onRequestRemove = { itemID ->
+                                    itemToRemove = itemID
+                                    showRemoveDialogBox = true
+                                },
+                                modifier = Modifier.shadow(elevation)
+                                    .draggableHandle(
+                                        onDragStarted = {
+
+                                        },
+                                        onDragStopped = {
+
+                                        }
+                                    )
+                            )
+                        }
                     }
 
                 } else {

@@ -15,4 +15,8 @@ class ListViewModel(
         toggleItemUseCase.execute(item)
     }
 
+    fun reorderItems(items: List<GroceryItem>) {
+        repository.saveAllItems(items)
+    }
+
 }

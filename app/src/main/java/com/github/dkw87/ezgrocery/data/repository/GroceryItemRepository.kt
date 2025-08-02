@@ -25,4 +25,8 @@ class GroceryItemRepository(private val dataStorage : GroceryItemDataStorage) {
         dataStorage.updateItem(toggledItem)
     }
 
+    fun saveAllItems(items: List<GroceryItem>) {
+        dataStorage.saveItems(items)
+    }
+
 }
