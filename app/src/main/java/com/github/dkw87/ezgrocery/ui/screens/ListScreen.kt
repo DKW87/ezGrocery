@@ -14,8 +14,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.material.icons.filled.ArrowDropUp
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
@@ -165,14 +163,20 @@ fun ListScreen(
                                 TextButton(onClick = {
                                     areActiveItemsHidden = false
                                 }) {
-                                    Text("Active")
+                                    Text(
+                                        text = "Active",
+                                        modifier = Modifier.padding(horizontal = 6.dp)
+                                    )
                                     Icon(Icons.Default.ExpandMore, contentDescription = null)
                                 }
                             } else {
                                 TextButton(onClick = {
                                     areActiveItemsHidden = true
                                 }) {
-                                    Text("Active")
+                                    Text(
+                                        text = "Active",
+                                        modifier = Modifier.padding(horizontal = 6.dp)
+                                    )
                                     Icon(Icons.Default.ExpandLess, contentDescription = null)
                                 }
                             }
@@ -210,14 +214,20 @@ fun ListScreen(
                                 TextButton(onClick = {
                                     areCompletedItemsHidden = false
                                 }) {
-                                    Text("Completed")
+                                    Text(
+                                        text = "Completed",
+                                        modifier = Modifier.padding(horizontal = 6.dp)
+                                    )
                                     Icon(Icons.Default.ExpandMore, contentDescription = null)
                                 }
                             } else {
                                 TextButton(onClick = {
                                     areCompletedItemsHidden = true
                                 }) {
-                                    Text("Completed")
+                                    Text(
+                                        text = "Completed",
+                                        modifier = Modifier.padding(horizontal = 6.dp)
+                                    )
                                     Icon(Icons.Default.ExpandLess, contentDescription = null)
                                 }
                             }
