@@ -165,6 +165,7 @@ fun ListScreen(
                                 }) {
                                     Text(
                                         text = "Active",
+                                        style = MaterialTheme.typography.headlineSmall,
                                         modifier = Modifier.padding(horizontal = 6.dp)
                                     )
                                     Icon(Icons.Default.ExpandMore, contentDescription = null)
@@ -175,6 +176,7 @@ fun ListScreen(
                                 }) {
                                     Text(
                                         text = "Active",
+                                        style = MaterialTheme.typography.headlineSmall,
                                         modifier = Modifier.padding(horizontal = 6.dp)
                                     )
                                     Icon(Icons.Default.ExpandLess, contentDescription = null)
@@ -216,6 +218,7 @@ fun ListScreen(
                                 }) {
                                     Text(
                                         text = "Completed",
+                                        style = MaterialTheme.typography.headlineSmall,
                                         modifier = Modifier.padding(horizontal = 6.dp)
                                     )
                                     Icon(Icons.Default.ExpandMore, contentDescription = null)
@@ -226,6 +229,7 @@ fun ListScreen(
                                 }) {
                                     Text(
                                         text = "Completed",
+                                        style = MaterialTheme.typography.headlineSmall,
                                         modifier = Modifier.padding(horizontal = 6.dp)
                                     )
                                     Icon(Icons.Default.ExpandLess, contentDescription = null)
