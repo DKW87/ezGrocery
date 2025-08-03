@@ -26,7 +26,8 @@ fun GroceryItemCard(
     isEditable: (Boolean),
     onToggle: (GroceryItem) -> Unit,
     onRequestRemove: (String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    dragHandleContent: (@Composable () -> Unit)? = null
 ) {
     Card(
         colors = setCardColors(item),
@@ -40,7 +41,11 @@ fun GroceryItemCard(
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
+            if (isEditable) {
+                dragHandleContent?.invoke()
+            }
             Column(modifier = Modifier.weight(1f)) {
+
                 Text(
                     text = item.name,
                     style = MaterialTheme.typography.headlineSmall
