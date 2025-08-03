@@ -24,7 +24,6 @@ import com.github.dkw87.ezgrocery.domain.model.GroceryItem
 fun GroceryItemCard(
     item: GroceryItem,
     isEditable: (Boolean),
-    onToggle: (GroceryItem) -> Unit,
     onRequestRemove: (String) -> Unit,
     onRequestEdit: (GroceryItem) -> Unit,
     modifier: Modifier = Modifier,
