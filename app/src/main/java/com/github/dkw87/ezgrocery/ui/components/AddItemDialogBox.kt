@@ -14,7 +14,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import com.github.dkw87.ezgrocery.viewmodel.AddItemViewModel
 import kotlinx.coroutines.delay
@@ -26,7 +25,6 @@ fun AddItemDialogBox(
     onSuccess: () -> Unit
 ) {
     val focusRequester = remember { FocusRequester() }
-    val keyboardController = LocalSoftwareKeyboardController.current
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -71,9 +69,8 @@ fun AddItemDialogBox(
     )
 
     LaunchedEffect(Unit) {
-        delay(100)
+        delay(200)
         focusRequester.requestFocus()
-        keyboardController?.show()
     }
 
 }
