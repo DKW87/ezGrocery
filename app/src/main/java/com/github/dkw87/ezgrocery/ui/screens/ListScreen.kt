@@ -34,6 +34,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -47,10 +48,13 @@ import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.github.dkw87.ezgrocery.R
+import com.github.dkw87.ezgrocery.domain.model.GroceryItem
 import com.github.dkw87.ezgrocery.ui.components.AddItemDialogBox
+import com.github.dkw87.ezgrocery.ui.components.EditItemDialogBox
 import com.github.dkw87.ezgrocery.ui.components.GroceryItemCard
 import com.github.dkw87.ezgrocery.ui.components.RemoveItemDialogBox
 import com.github.dkw87.ezgrocery.viewmodel.AddItemViewModel
+import com.github.dkw87.ezgrocery.viewmodel.EditItemViewModel
 import com.github.dkw87.ezgrocery.viewmodel.ListViewModel
 import com.github.dkw87.ezgrocery.viewmodel.RemoveItemViewModel
 import kotlinx.coroutines.launch
@@ -62,7 +66,8 @@ import sh.calvin.reorderable.rememberReorderableLazyListState
 fun ListScreen(
     listViewModel: ListViewModel,
     addItemViewModel: AddItemViewModel,
-    removeItemViewModel: RemoveItemViewModel
+    removeItemViewModel: RemoveItemViewModel,
+    editItemViewModel: EditItemViewModel
 ) {
     val items by listViewModel.items.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -71,7 +76,9 @@ fun ListScreen(
 
     var showAddDialogBox by remember { mutableStateOf(false) }
     var showRemoveDialogBox by remember { mutableStateOf(false) }
+    var showEditDialogBox by remember { mutableStateOf(false) }
     var itemToRemove by remember { mutableStateOf<String?>(null) }
+    var itemToEdit by remember { mutableStateOf<GroceryItem?>(null) }
     var isEditListScreen by remember { mutableStateOf(false) }
     var areActiveItemsHidden by remember { mutableStateOf(false) }
     var areCompletedItemsHidden by remember { mutableStateOf(false) }
@@ -178,6 +185,10 @@ fun ListScreen(
                                     itemToRemove = itemID
                                     showRemoveDialogBox = true
                                 },
+                                onRequestEdit = { requestedItem ->
+                                    itemToEdit = requestedItem
+                                    showEditDialogBox = true
+                                },
                                 dragHandleContent = {
                                     Icon(
                                         Icons.Default.DragIndicator,
@@ -236,6 +247,10 @@ fun ListScreen(
                                     itemToRemove = itemID
                                     showRemoveDialogBox = true
                                 },
+                                onRequestEdit = { requestedItem ->
+                                    itemToEdit = requestedItem
+                                    showEditDialogBox = true
+                                },
                                 modifier = Modifier.combinedClickable(
                                     onClick = {
                                         if (!isEditListScreen) {
@@ -289,6 +304,10 @@ fun ListScreen(
                                     itemToRemove = itemID
                                     showRemoveDialogBox = true
                                 },
+                                onRequestEdit = { requestedItem ->
+                                    itemToEdit = requestedItem
+                                    showEditDialogBox = true
+                                },
                                 modifier = Modifier.combinedClickable(
                                     onClick = {
                                         if (!isEditListScreen) {
@@ -340,6 +359,29 @@ fun ListScreen(
                     snackbarHostState.currentSnackbarData?.dismiss()
                     snackbarHostState.showSnackbar(
                         message = "Item successfully removed",
+                        duration = SnackbarDuration.Short,
+                        withDismissAction = true
+                    )
+                }
+            }
+        )
+    }
+
+    if (showEditDialogBox && itemToEdit != null) {
+        LaunchedEffect(itemToEdit) {
+            editItemViewModel.initializeWith(itemToEdit!!)
+        }
+        EditItemDialogBox(
+            editItemViewModel = editItemViewModel,
+            onDismiss = {
+                showEditDialogBox = false
+                itemToEdit = null
+            },
+            onSuccess = {
+                scope.launch {
+                    snackbarHostState.currentSnackbarData?.dismiss()
+                    snackbarHostState.showSnackbar(
+                        message = "Item successfully edited",
                         duration = SnackbarDuration.Short,
                         withDismissAction = true
                     )

@@ -25,11 +25,13 @@ class MainActivity : ComponentActivity() {
                 val listViewModel = remember { appContainer.provideListViewModel() }
                 val addItemViewModel = remember { appContainer.provideAddItemViewModel() }
                 val removeItemViewModel = remember { appContainer.provideRemoveItemViewModel() }
+                val editItemViewModel = remember { appContainer.provideEditItemViewModel() }
 
                 ListScreen(
                     listViewModel = listViewModel,
                     addItemViewModel = addItemViewModel,
-                    removeItemViewModel = removeItemViewModel
+                    removeItemViewModel = removeItemViewModel,
+                    editItemViewModel = editItemViewModel
                 )
             }
         }

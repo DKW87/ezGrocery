@@ -26,6 +26,7 @@ fun GroceryItemCard(
     isEditable: (Boolean),
     onToggle: (GroceryItem) -> Unit,
     onRequestRemove: (String) -> Unit,
+    onRequestEdit: (GroceryItem) -> Unit,
     modifier: Modifier = Modifier,
     dragHandleContent: (@Composable () -> Unit)? = null
 ) {
@@ -56,7 +57,7 @@ fun GroceryItemCard(
                 )
             }
             if (isEditable) {
-                IconButton(onClick = {}) {
+                IconButton(onClick = { onRequestEdit(item) }) {
                     Icon(Icons.Default.Edit, contentDescription = "Edit this item")
                 }
                 IconButton(onClick = { onRequestRemove(item.id) }) {
