@@ -1,6 +1,5 @@
 package com.github.dkw87.ezgrocery.ui.screens
 
-import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
@@ -30,7 +29,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.IconToggleButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
@@ -212,12 +210,10 @@ fun ListScreen(
 
                     items(items, key = { it.id }) { item ->
                         ReorderableItem(reorderableLazyListState, key = item.id) { isDragging ->
-                            val elevation by animateDpAsState(if (isDragging) 4.dp else 0.dp)
 
                             GroceryItemCard(
                                 item = item,
                                 isEditable = isEditListScreen,
-                                onToggle = listViewModel::toggleItem,
                                 onRequestRemove = { itemID ->
                                     itemToRemove = itemID
                                     showRemoveDialogBox = true
@@ -278,7 +274,6 @@ fun ListScreen(
                             GroceryItemCard(
                                 item = item,
                                 isEditable = isEditListScreen,
-                                onToggle = listViewModel::toggleItem,
                                 onRequestRemove = { itemID ->
                                     itemToRemove = itemID
                                     showRemoveDialogBox = true
@@ -335,7 +330,6 @@ fun ListScreen(
                             GroceryItemCard(
                                 item = item,
                                 isEditable = isEditListScreen,
-                                onToggle = listViewModel::toggleItem,
                                 onRequestRemove = { itemID ->
                                     itemToRemove = itemID
                                     showRemoveDialogBox = true
