@@ -23,11 +23,14 @@ import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.DragIndicator
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconToggleButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
@@ -105,7 +108,25 @@ fun ListScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("ezGrocery") }
+                navigationIcon = {
+                    IconButton(onClick = {}) {
+                        Icon(Icons.Default.Menu, contentDescription = "Navigation menu")
+                    }
+                },
+                title = {
+                    Text(
+                        text = "ezGrocery",
+                        style = MaterialTheme.typography.headlineLarge
+                    )
+                },
+                actions = {
+                    IconButton(
+                        onClick = {},
+                        modifier = Modifier.padding(end = 5.dp)) {
+                        Icon(
+                            Icons.Default.Settings, contentDescription = "Application settings")
+                    }
+                }
             )
         },
         floatingActionButton = {
@@ -122,7 +143,8 @@ fun ListScreen(
                 BottomAppBar(
                     containerColor = MaterialTheme.colorScheme.surface,
                     modifier = Modifier.height(
-                        40.dp + WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
+                        40.dp + WindowInsets.navigationBars.asPaddingValues()
+                            .calculateBottomPadding()
                     )
                 ) {
                     Spacer(modifier = Modifier.weight(1f))
