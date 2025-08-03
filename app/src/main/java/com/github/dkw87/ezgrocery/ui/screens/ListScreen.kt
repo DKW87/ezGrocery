@@ -365,6 +365,8 @@ fun ListScreen(
             },
             onSuccess = {
                 scope.launch {
+                    if (items.isEmpty() && isEditListScreen) isEditListScreen = false
+
                     snackbarHostState.currentSnackbarData?.dismiss()
                     snackbarHostState.showSnackbar(
                         message = "Item successfully removed",
