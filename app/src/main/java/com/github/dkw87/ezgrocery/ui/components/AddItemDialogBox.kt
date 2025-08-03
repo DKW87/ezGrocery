@@ -9,9 +9,15 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import com.github.dkw87.ezgrocery.viewmodel.AddItemViewModel
+import kotlinx.coroutines.delay
 
 @Composable
 fun AddItemDialogBox(
@@ -19,6 +25,9 @@ fun AddItemDialogBox(
     onDismiss: () -> Unit,
     onSuccess: () -> Unit
 ) {
+    val focusRequester = remember { FocusRequester() }
+    val keyboardController = LocalSoftwareKeyboardController.current
+
     AlertDialog(
         onDismissRequest = onDismiss,
         title = { Text("Add item") },
@@ -28,7 +37,9 @@ fun AddItemDialogBox(
                     value = viewModel.itemName,
                     onValueChange = viewModel::updateItemName,
                     label = { Text("Item name") },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .focusRequester(focusRequester)
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -58,4 +69,11 @@ fun AddItemDialogBox(
             }
         }
     )
+
+    LaunchedEffect(Unit) {
+        delay(100)
+        focusRequester.requestFocus()
+        keyboardController?.show()
+    }
+
 }
