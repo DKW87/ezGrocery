@@ -158,7 +158,7 @@ fun ListScreen(
 
                     item {
                         Text(
-                            text = "Adjust, edit or remove",
+                            text = "Edit, reorder or remove",
                             modifier = Modifier.padding(horizontal = 20.dp)
                         )
                     }
