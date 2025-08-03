@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -17,13 +16,15 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.DragIndicator
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
+import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
@@ -105,18 +106,28 @@ fun ListScreen(
             )
         },
         floatingActionButton = {
-            if (isEditListScreen) {
-                FloatingActionButton(
-                    onClick = { isEditListScreen = false },
-                    containerColor = MaterialTheme.colorScheme.secondaryContainer
-                ) {
-                    Icon(Icons.Default.Check, contentDescription = "Finish editing")
-                }
-            } else {
+            if (!isEditListScreen) {
                 FloatingActionButton(
                     onClick = { showAddDialogBox = true }
                 ) {
                     Icon(Icons.Default.Add, contentDescription = "Add item")
+                }
+            }
+        },
+        bottomBar = {
+            if (isEditListScreen) {
+                BottomAppBar(
+                    containerColor = MaterialTheme.colorScheme.surface,
+                    modifier = Modifier.height(90.dp)
+                ) {
+                    Spacer(modifier = Modifier.weight(1f))
+
+                    IconButton(
+                        onClick = { isEditListScreen = false },
+                        modifier = Modifier.padding(end = 25.dp)
+                    ) {
+                        Icon(Icons.Default.Done, contentDescription = "Finalize changes")
+                    }
                 }
             }
         },
@@ -193,9 +204,8 @@ fun ListScreen(
                                         Icons.Default.DragIndicator,
                                         contentDescription = "Drag to reorder",
                                         modifier = Modifier
-                                            .padding(8.dp)
+                                            .padding(end = 4.dp)
                                             .size(40.dp)
-                                            .offset(x = (-15).dp)
                                             .draggableHandle(enabled = true)
                                     )
                                 }
